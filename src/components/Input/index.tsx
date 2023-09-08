@@ -1,15 +1,16 @@
 import { styled } from 'styled-components'
+import { InputHTMLAttributes } from 'react'
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   title: string
   placeholder: string
 }
 
-export default function Input({ title, placeholder }: InputProps) {
+export default function Input({ title, placeholder, ...props }: InputProps) {
   return (
     <InputLabel>
       <span>{title}</span>
-      <input type="text" placeholder={placeholder} />
+      <input type="text" placeholder={placeholder} {...props} />
     </InputLabel>
   )
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const TaskContext = createContext<any>(null)
 
@@ -7,11 +7,33 @@ interface ContextProps {
 }
 
 export function TaskProvider({ children }: ContextProps) {
-  const addTask = () => {
-    console.log('add')
+  const savedTasks = localStorage.getItem('daily-tasks')
+  const [tasks, setTasks] = useState<string[]>(
+    savedTasks ? JSON.parse(savedTasks) : []
+  )
+  const [currentTask, setCurrentTask] = useState('')
+
+  useEffect(() => {
+    savedTasks
+  }, [tasks])
+
+  useEffect(() => {
+    localStorage.setItem('daily-tasks', JSON.stringify(tasks))
+  }, [tasks])
+
+  const saveTask = () => {
+    if (currentTask.trim() !== '') {
+      setTasks([...tasks, currentTask])
+      setCurrentTask('')
+    }
   }
+
   return (
-    <TaskContext.Provider value={{ addTask }}>{children}</TaskContext.Provider>
+    <TaskContext.Provider
+      value={{ tasks, saveTask, currentTask, setCurrentTask }}
+    >
+      {children}
+    </TaskContext.Provider>
   )
 }
 
