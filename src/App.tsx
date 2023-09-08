@@ -1,9 +1,9 @@
-import Home from './pages/Home'
+import RouterApp from './routes'
 
 function App() {
   return (
     <div>
-      <Home />
+      <RouterApp />
     </div>
   )
 }
