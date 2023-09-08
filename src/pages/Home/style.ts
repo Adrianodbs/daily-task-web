@@ -26,6 +26,7 @@ export const Content = styled.div`
 
   h1{
     color: var(--purple);
+    text-align: center;
   }
 
   img{
@@ -54,6 +55,12 @@ export const Content = styled.div`
   
   .heroRight{
     right: 10px;
+  }
+  }
+
+  @media (max-width:450px){
+    .hero{
+    display: none;
   }
   }
 `

@@ -1,10 +1,11 @@
+import { TaskProvider } from './context/TaskContext'
 import RouterApp from './routes'
 
 function App() {
   return (
-    <div>
+    <TaskProvider>
       <RouterApp />
-    </div>
+    </TaskProvider>
   )
 }
 
