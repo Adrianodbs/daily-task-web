@@ -28,9 +28,11 @@ const InputLabel = styled.div`
   }
 
   input {
-    border: none;
+    border: 1px solid #cacaca;
     height: 32px;
-    padding: 5px;
+    padding: 8px;
     width: 80%;
+    border-radius: 4px;
+    outline: none;
   }
 `
