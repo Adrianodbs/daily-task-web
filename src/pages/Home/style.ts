@@ -12,7 +12,7 @@ export const Content = styled.div`
   background-color: var(--white);
   width: 90%;
   max-width: 500px;
-  min-height: 90vh;
+  min-height: 80vh;
   border-radius: 8px;
   padding: 20px;
   display: flex;
