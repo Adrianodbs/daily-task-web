@@ -11,6 +11,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   background-color: var(--white);
   width: 90%;
+  max-width: 500px;
   min-height: 90vh;
   border-radius: 8px;
   padding: 20px;
@@ -18,4 +19,8 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  h1{
+    color: var(--purple);
+  }
 `

@@ -1,3 +1,4 @@
+import Input from '../../components/Input'
 import * as C from './style'
 
 function Home() {
@@ -5,7 +6,7 @@ function Home() {
     <C.Container>
       <C.Content>
         <h1>Registre uma nova tarefa</h1>
-        <input />
+        <Input title="Título da tarefa" placeholder="Adicionar tarefa" />
         <button>Salvar</button>
       </C.Content>
     </C.Container>
