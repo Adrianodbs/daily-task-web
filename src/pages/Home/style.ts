@@ -2,13 +2,10 @@ import { styled } from "styled-components";
 
 export const Container = styled.div`
   background-color: var(--purple);
-  min-height: 100vh;
+  min-height: calc(100vh - 48px);
   display: flex;
   justify-content: center;
   align-items: center;
-  
-
-  
 `
 
 export const Content = styled.div`
