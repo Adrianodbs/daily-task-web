@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Button from '../../components/Button'
 import { useTaskContext } from '../../context/TaskContext'
 import { getCurrentDate } from '../../utils/GetCurrentDate'
@@ -7,6 +8,7 @@ import * as C from './style'
 
 export default function Tasks() {
   const [checkedTasks, setCheckedTasks] = useState<string[]>([])
+  const navigate = useNavigate()
 
   const { tasks } = useTaskContext()
 
@@ -21,7 +23,10 @@ export default function Tasks() {
     }
   }
 
-  console.log(checkedTasks)
+  function handleAddTaskClick() {
+    navigate('/')
+  }
+
   return (
     <C.Container>
       <C.Content>
@@ -45,13 +50,12 @@ export default function Tasks() {
               <p>Você não adicionou nenhuma tarefa ainda!</p>
             )}
           </C.List>
-
-          {tasks.length > 0 ? (
-            <Button children="Enviar" />
-          ) : (
-            <Button children="Adicionar tarefa" />
-          )}
         </C.Tasks>
+        {tasks.length > 0 ? (
+          <Button children="Enviar" />
+        ) : (
+          <Button children="Adicionar tarefa" onClick={handleAddTaskClick} />
+        )}
       </C.Content>
     </C.Container>
   )

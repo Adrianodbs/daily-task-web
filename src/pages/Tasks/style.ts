@@ -18,6 +18,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 
   h1{
     margin-bottom: 40px;
@@ -46,6 +47,11 @@ export const List = styled.ul`
     color: var(--purple);
     font-weight: 600;
     text-transform: uppercase;
+  }
+
+  p{
+    font-size: 20px;
+    font-weight: 600;
   }
 `
 
