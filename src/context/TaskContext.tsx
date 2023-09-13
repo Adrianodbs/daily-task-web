@@ -30,7 +30,7 @@ export function TaskProvider({ children }: ContextProps) {
 
   return (
     <TaskContext.Provider
-      value={{ tasks, saveTask, currentTask, setCurrentTask }}
+      value={{ tasks, setTasks, saveTask, currentTask, setCurrentTask }}
     >
       {children}
     </TaskContext.Provider>

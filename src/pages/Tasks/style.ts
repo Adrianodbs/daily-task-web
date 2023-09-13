@@ -66,6 +66,20 @@ export const TaskItem = styled.div`
   border-radius: 4px;
   border: 1px solid #cacaca;
 
+  .rigthIcons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    svg{
+      cursor: pointer;
+
+      &:hover{
+        opacity: .7;
+      }
+    }
+  }
 `
 
 export const Checkbox = styled.input`

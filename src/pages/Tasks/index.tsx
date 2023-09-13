@@ -5,6 +5,7 @@ import { useTaskContext } from '../../context/TaskContext'
 import { getCurrentDate } from '../../utils/GetCurrentDate'
 
 import * as C from './style'
+import { BsTrash } from 'react-icons/bs'
 
 export default function Tasks() {
   const [checkedTasks, setCheckedTasks] = useState<string[]>([])
@@ -13,7 +14,7 @@ export default function Tasks() {
 
   const navigate = useNavigate()
 
-  const { tasks } = useTaskContext()
+  const { tasks, setTasks } = useTaskContext()
 
   useEffect(() => {
     const completedTask = checkedTasks.length
@@ -46,6 +47,23 @@ export default function Tasks() {
     navigate('/')
   }
 
+  function handleRemoveTask(task: string) {
+    const updatedTasks = tasks.filter((taskName: string) => taskName !== task)
+    setTasks(updatedTasks)
+
+    const localStorageTasks = localStorage.getItem('daily-tasks')
+    const parsedLocalStorageTasks = localStorageTasks
+      ? JSON.parse(localStorageTasks)
+      : []
+    const updatedLocalStorageTasks = parsedLocalStorageTasks.filter(
+      (taskName: string) => taskName !== task
+    )
+    localStorage.setItem(
+      'daily-tasks',
+      JSON.stringify(updatedLocalStorageTasks)
+    )
+  }
+
   return (
     <C.Container>
       <C.Content>
@@ -57,11 +75,18 @@ export default function Tasks() {
                 {tasks.map((task: string, index: number) => (
                   <C.TaskItem key={index}>
                     <li>{task}</li>
-                    <C.Checkbox
-                      type="checkbox"
-                      checked={checkedTasks.includes(task)}
-                      onChange={() => handleChecked(task)}
-                    />
+                    <div className="rigthIcons">
+                      <C.Checkbox
+                        type="checkbox"
+                        checked={checkedTasks.includes(task)}
+                        onChange={() => handleChecked(task)}
+                      />
+                      <BsTrash
+                        size={20}
+                        color="#c40233"
+                        onClick={() => handleRemoveTask(task)}
+                      />
+                    </div>
                   </C.TaskItem>
                 ))}
               </>
