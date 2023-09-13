@@ -19,6 +19,7 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  margin: 10px 0;
 
   h1{
     margin-bottom: 40px;
@@ -94,3 +95,29 @@ export const Checkbox = styled.input`
     }
   }
 `;
+
+export const BtnSend = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`
+
+export const ProgressBar = styled.div`
+  height: 20px;
+  border-radius: 5;
+  margin-top: 5;
+  border: 1px solid #cacaca;
+  background-color: transparent;
+  width: 300px;
+  border-radius: 4px;
+
+  text-align: center;
+  
+  p{
+    margin: 4px 0;
+    font-weight: 500;
+  }
+
+`
