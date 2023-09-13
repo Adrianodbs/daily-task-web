@@ -28,19 +28,29 @@ export default function Tasks() {
         <h1>{getCurrentDate()}</h1>
         <C.Tasks>
           <C.List>
-            {tasks.map((task: string, index: number) => (
-              <C.TaskItem key={index}>
-                <li>{task}</li>
-                <C.Checkbox
-                  type="checkbox"
-                  checked={checkedTasks.includes(task)}
-                  onChange={() => handleChecked(task)}
-                />
-              </C.TaskItem>
-            ))}
+            {tasks.length > 0 ? (
+              <>
+                {tasks.map((task: string, index: number) => (
+                  <C.TaskItem key={index}>
+                    <li>{task}</li>
+                    <C.Checkbox
+                      type="checkbox"
+                      checked={checkedTasks.includes(task)}
+                      onChange={() => handleChecked(task)}
+                    />
+                  </C.TaskItem>
+                ))}
+              </>
+            ) : (
+              <p>Você não adicionou nenhuma tarefa ainda!</p>
+            )}
           </C.List>
 
-          <Button children="Enviar" />
+          {tasks.length > 0 ? (
+            <Button children="Enviar" />
+          ) : (
+            <Button children="Adicionar tarefa" />
+          )}
         </C.Tasks>
       </C.Content>
     </C.Container>
