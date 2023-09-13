@@ -82,9 +82,6 @@ export const Checkbox = styled.input`
       color: #fff;
       font-size: 16px;
     }
-
- 
-
     &::after {
       top: 2px;
       right: 3.6px;
