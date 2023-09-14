@@ -1,18 +1,38 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export default function Header() {
+  const [menu, setMenu] = useState('')
   return (
     <HeaderStyle>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link
+            className={menu === 'home' ? 'active' : ''}
+            onClick={() => setMenu('home')}
+            to="/"
+          >
+            Home
+          </Link>
         </li>
         <li>
-          <Link to="/tasks">Tarefas</Link>
+          <Link
+            className={menu === 'tasks' ? 'active' : ''}
+            onClick={() => setMenu('tasks')}
+            to="/tasks"
+          >
+            Tarefas
+          </Link>
         </li>
         <li>
-          <Link to="/dashboard">Pontuação</Link>
+          <Link
+            className={menu === 'dashboard' ? 'active' : ''}
+            onClick={() => setMenu('dashboard')}
+            to="/dashboard"
+          >
+            Pontuação
+          </Link>
         </li>
       </ul>
     </HeaderStyle>
@@ -53,5 +73,9 @@ const HeaderStyle = styled.header`
 
   a {
     text-decoration: none;
+  }
+
+  .active {
+    opacity: 0.8;
   }
 `
