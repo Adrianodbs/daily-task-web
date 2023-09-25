@@ -80,6 +80,11 @@ export const TaskItem = styled.div`
       }
     }
   }
+
+  .task-completed {
+  text-decoration: line-through;
+  opacity: .7;
+}
 `
 
 export const Checkbox = styled.input`

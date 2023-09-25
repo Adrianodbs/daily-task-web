@@ -19,7 +19,8 @@ export default function Tasks() {
     checkedTasks,
     setCheckedTasks,
     handleSendTasks,
-    selectedTasks
+    selectedTasks,
+    taskSentMap
   } = useTaskContext()
 
   useEffect(() => {
@@ -80,12 +81,21 @@ export default function Tasks() {
               <>
                 {tasks.map((task: string, index: number) => (
                   <C.TaskItem key={index}>
-                    <li>{task}</li>
+                    <li>
+                      <span
+                        className={
+                          checkedTasks.includes(task) ? 'task-completed' : ''
+                        }
+                      >
+                        {task}
+                      </span>
+                    </li>
                     <div className="rigthIcons">
                       <C.Checkbox
                         type="checkbox"
                         checked={checkedTasks.includes(task)}
                         onChange={() => handleChecked(task)}
+                        disabled={taskSentMap[task]}
                       />
                       <BsTrash
                         size={20}
