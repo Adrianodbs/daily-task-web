@@ -8,13 +8,19 @@ import * as C from './style'
 import { BsTrash } from 'react-icons/bs'
 
 export default function Tasks() {
-  const [checkedTasks, setCheckedTasks] = useState<string[]>([])
   const [progress, setProgress] = useState(100)
   const [progressColor, setProgressColor] = useState('green')
 
   const navigate = useNavigate()
 
-  const { tasks, setTasks } = useTaskContext()
+  const {
+    tasks,
+    setTasks,
+    checkedTasks,
+    setCheckedTasks,
+    handleSendTasks,
+    selectedTasks
+  } = useTaskContext()
 
   useEffect(() => {
     const completedTask = checkedTasks.length
@@ -36,7 +42,7 @@ export default function Tasks() {
     // Verificar se a tarefa já está na lista de tarefas marcadas
     if (checkedTasks.includes(task)) {
       // Se estiver, remova-a
-      setCheckedTasks(checkedTasks.filter(t => t !== task))
+      setCheckedTasks(checkedTasks.filter((t: string) => t !== task))
     } else {
       // Se não estiver, adicione-a
       setCheckedTasks([...checkedTasks, task])
@@ -107,7 +113,10 @@ export default function Tasks() {
               ></div>
               <p>Tarefas concluídas: {Math.floor(progress)}%</p>
             </C.ProgressBar>
-            <Button children="Enviar" />
+            <Button
+              children="Enviar"
+              onClick={() => handleSendTasks(selectedTasks)}
+            />
           </C.BtnSend>
         ) : (
           <Button children="Adicionar tarefa" onClick={handleAddTaskClick} />
