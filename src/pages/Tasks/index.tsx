@@ -93,7 +93,10 @@ export default function Tasks() {
                     <div className="rigthIcons">
                       <C.Checkbox
                         type="checkbox"
-                        checked={checkedTasks.includes(task)}
+                        checked={
+                          sentTasks.includes(task) ||
+                          checkedTasks.includes(task)
+                        }
                         onChange={() => handleChecked(task)}
                         disabled={sentTasks.includes(task)}
                       />

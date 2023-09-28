@@ -28,8 +28,11 @@ export function TaskProvider({ children }: ContextProps) {
     setCurrentDate(getCurrentDate())
 
     const storedCompletedTasks = localStorage.getItem('completedTasks')
-    const parsedCompletedTasks = JSON.parse(storedCompletedTasks) || []
+    const parsedCompletedTasks = storedCompletedTasks
+      ? JSON.parse(storedCompletedTasks)
+      : []
 
+    // Defina o estado sentTasks com os dados do localStorage
     setSentTasks(parsedCompletedTasks)
   }, [])
 
@@ -50,15 +53,17 @@ export function TaskProvider({ children }: ContextProps) {
   }
 
   const handleSendTasks = () => {
-    const completedTaskIndexes = selectedTasks
-      .map((isChecked, index) => (isChecked ? index : null))
-      .filter(index => index !== null)
+    const completedTasks = checkedTasks.filter(
+      task => !sentTasks.includes(task)
+    )
 
-    const completedTasks = completedTaskIndexes.map(index => tasks[index])
+    if (completedTasks.length === 0) {
+      return
+    }
 
     setSentTasks([...sentTasks, ...completedTasks])
 
-    saveCompletedTasksToStorage(completedTasks)
+    saveCompletedTasksToStorage([...sentTasks, ...completedTasks])
   }
 
   const saveCompletedTasksToStorage = (completedTasks: string[]) => {
