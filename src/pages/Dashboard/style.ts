@@ -21,4 +21,22 @@ export const Container = styled.div`
   span{
     margin-top: 30px;
   }
+
+ 
+`
+
+export const Level = styled.div`
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h2{
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  img{
+    width: 40px;
+    height: 40px;
+  }
 `
