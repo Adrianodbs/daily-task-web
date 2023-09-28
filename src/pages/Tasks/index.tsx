@@ -20,7 +20,7 @@ export default function Tasks() {
     setCheckedTasks,
     handleSendTasks,
     selectedTasks,
-    taskSentMap
+    sentTasks
   } = useTaskContext()
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function Tasks() {
                     <li>
                       <span
                         className={
-                          checkedTasks.includes(task) ? 'task-completed' : ''
+                          sentTasks.includes(task) ? 'task-completed' : ''
                         }
                       >
                         {task}
@@ -95,7 +95,7 @@ export default function Tasks() {
                         type="checkbox"
                         checked={checkedTasks.includes(task)}
                         onChange={() => handleChecked(task)}
-                        disabled={taskSentMap[task]}
+                        disabled={sentTasks.includes(task)}
                       />
                       <BsTrash
                         size={20}

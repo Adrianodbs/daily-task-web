@@ -14,25 +14,23 @@ export function TaskProvider({ children }: ContextProps) {
     savedTasks ? JSON.parse(savedTasks) : []
   )
   const [currentTask, setCurrentTask] = useState('')
-  const [tasksSent, setTasksSent] = useState<string[]>([])
   const selectedTasks = tasks.filter(task => checkedTasks.includes(task))
 
-  const [currentDate, setCurrentDate] = useState<string>('')
+  const [sentTasks, setSentTasks] = useState<string[]>([])
 
-  const [taskSentMap, setTaskSentMap] = useState<{ [key: string]: boolean }>(
-    tasks.reduce((acc, task) => {
-      acc[task] = false
-      return acc
-    }, {} as { [key: string]: boolean }) // Adicione uma assinatura de índice aqui
-  )
+  const [currentDate, setCurrentDate] = useState<string>('')
 
   useEffect(() => {
     savedTasks
   }, [tasks])
 
   useEffect(() => {
-    // Atualize a data atual quando o componente for montado
     setCurrentDate(getCurrentDate())
+
+    const storedCompletedTasks = localStorage.getItem('completedTasks')
+    const parsedCompletedTasks = JSON.parse(storedCompletedTasks) || []
+
+    setSentTasks(parsedCompletedTasks)
   }, [])
 
   useEffect(() => {
@@ -46,25 +44,39 @@ export function TaskProvider({ children }: ContextProps) {
     }
 
     if (getCurrentDate() !== currentDate) {
-      setTasksSent([])
       setCheckedTasks([])
       setCurrentDate(getCurrentDate())
     }
   }
 
   const handleSendTasks = () => {
-    selectedTasks.forEach(task => {
-      if (!tasksSent.includes(task)) {
-        setTasksSent([...tasksSent, task])
-        setTaskSentMap(prevMap => ({
-          ...prevMap,
-          [task]: true
-        }))
-      }
-    })
+    const completedTaskIndexes = selectedTasks
+      .map((isChecked, index) => (isChecked ? index : null))
+      .filter(index => index !== null)
+
+    const completedTasks = completedTaskIndexes.map(index => tasks[index])
+
+    setSentTasks([...sentTasks, ...completedTasks])
+
+    saveCompletedTasksToStorage(completedTasks)
   }
 
-  console.log(tasksSent)
+  const saveCompletedTasksToStorage = (completedTasks: string[]) => {
+    try {
+      const storedCompletedTasks =
+        localStorage.getItem('completedTasks') || '[]'
+      const parsedCompletedTasks = JSON.parse(storedCompletedTasks)
+
+      const updatedCompletedTasks = [...parsedCompletedTasks, ...completedTasks]
+
+      localStorage.setItem(
+        'completedTasks',
+        JSON.stringify(updatedCompletedTasks)
+      )
+    } catch (error) {
+      console.error('Erro ao salvar tarefas concluídas no LocalStorage', error)
+    }
+  }
 
   return (
     <TaskContext.Provider
@@ -78,7 +90,8 @@ export function TaskProvider({ children }: ContextProps) {
         setCurrentTask,
         handleSendTasks,
         selectedTasks,
-        taskSentMap
+        saveCompletedTasksToStorage,
+        sentTasks
       }}
     >
       {children}
