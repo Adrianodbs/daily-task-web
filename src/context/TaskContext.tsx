@@ -31,8 +31,6 @@ export function TaskProvider({ children }: ContextProps) {
     const parsedCompletedTasks = storedCompletedTasks
       ? JSON.parse(storedCompletedTasks)
       : []
-
-    // Defina o estado sentTasks com os dados do localStorage
     setSentTasks(parsedCompletedTasks)
   }, [])
 
@@ -61,9 +59,9 @@ export function TaskProvider({ children }: ContextProps) {
       return
     }
 
-    setSentTasks([...sentTasks, ...completedTasks])
+    setSentTasks(prev => [...prev, ...completedTasks])
 
-    saveCompletedTasksToStorage([...sentTasks, ...completedTasks])
+    saveCompletedTasksToStorage(completedTasks)
   }
 
   const saveCompletedTasksToStorage = (completedTasks: string[]) => {
