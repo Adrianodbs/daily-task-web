@@ -1,21 +1,22 @@
 import styled from 'styled-components'
 
-import { FiX } from 'react-icons/fi'
-
 interface ModalProps {
   content: string
   close: () => void
+  onConfirm: () => void
 }
 
-export default function Modal({ content, close }: ModalProps) {
+export default function Modal({ content, close, onConfirm }: ModalProps) {
   return (
     <Container>
       <Content>
-        <button className="close" onClick={close}>
-          <FiX size={23} color="#fff" />
-          Voltar
-        </button>
         <span>{content}</span>
+        <div className="buttons">
+          <button onClick={onConfirm}>Sim</button>
+          <button className="close" onClick={close}>
+            Cancelar
+          </button>
+        </div>
       </Content>
     </Container>
   )
@@ -34,6 +35,7 @@ const Container = styled.div`
 const Content = styled.div`
   position: fixed;
   max-width: 600px;
+  width: 90%;
   top: 15%;
   left: 0;
   right: 0;
@@ -41,29 +43,39 @@ const Content = styled.div`
   padding: 5em 2rem;
   background-color: #fff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-
-  .close {
-    background-color: #f65835;
-    border: 0;
-    color: #fff;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .close svg {
-    margin-right: 5px;
-  }
+  border-radius: 12px;
 
   span {
     font-weight: bold;
     font-size: 1.2em;
     color: #121212;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .buttons button {
+    background-color: #008000;
+    border: 0;
+    color: #fff;
+    padding: 4px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 100px;
+    height: 32px;
+    transition: all 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .buttons button.close {
+    background-color: #f65835;
   }
 `

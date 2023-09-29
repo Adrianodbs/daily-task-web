@@ -6,10 +6,16 @@ import { getCurrentDate } from '../../utils/GetCurrentDate'
 
 import * as C from './style'
 import { BsTrash } from 'react-icons/bs'
+import Modal from '../../components/Modal'
+
+import { toast } from 'react-toastify'
 
 export default function Tasks() {
   const [progress, setProgress] = useState(100)
   const [progressColor, setProgressColor] = useState('green')
+
+  const [openModal, setOpenModal] = useState(false)
+  const [taskToRemove, setTaskToRemove] = useState('')
 
   const navigate = useNavigate()
 
@@ -55,7 +61,14 @@ export default function Tasks() {
   }
 
   function handleRemoveTask(task: string) {
-    const updatedTasks = tasks.filter((taskName: string) => taskName !== task)
+    setTaskToRemove(task)
+    setOpenModal(true)
+  }
+
+  function handleConfirmRemove() {
+    const updatedTasks = tasks.filter(
+      (taskName: string) => taskName !== taskToRemove
+    )
     setTasks(updatedTasks)
 
     const localStorageTasks = localStorage.getItem('daily-tasks')
@@ -63,12 +76,20 @@ export default function Tasks() {
       ? JSON.parse(localStorageTasks)
       : []
     const updatedLocalStorageTasks = parsedLocalStorageTasks.filter(
-      (taskName: string) => taskName !== task
+      (taskName: string) => taskName !== tasks
     )
     localStorage.setItem(
       'daily-tasks',
       JSON.stringify(updatedLocalStorageTasks)
     )
+
+    setOpenModal(false)
+    setTaskToRemove('')
+    toast.success(`A tarefa '${taskToRemove}' foi deletada!`)
+  }
+
+  function closeModal() {
+    setOpenModal(!openModal)
   }
 
   return (
@@ -105,6 +126,13 @@ export default function Tasks() {
                         color="#c40233"
                         onClick={() => handleRemoveTask(task)}
                       />
+                      {openModal && (
+                        <Modal
+                          close={closeModal}
+                          content={`Deseja apagar a tarefa '${taskToRemove}'`}
+                          onConfirm={handleConfirmRemove}
+                        />
+                      )}
                     </div>
                   </C.TaskItem>
                 ))}
