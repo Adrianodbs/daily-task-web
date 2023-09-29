@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { getCurrentDate } from '../utils/GetCurrentDate'
+import { toast } from 'react-toastify'
 
 const TaskContext = createContext<any>(null)
 
@@ -57,6 +58,7 @@ export function TaskProvider({ children }: ContextProps) {
   const saveTask = () => {
     if (currentTask.trim() !== '') {
       setTasks([...tasks, currentTask])
+      toast.success(`A tarefa '${currentTask}' foi adicionada com sucesso!`)
       setCurrentTask('')
     }
 
