@@ -94,8 +94,11 @@ export function TaskProvider({ children }: ContextProps) {
         'completedTasks',
         JSON.stringify(updatedCompletedTasks)
       )
+
+      toast.success('Ação concluída com sucesso!')
     } catch (error) {
       console.error('Erro ao salvar tarefas concluídas no LocalStorage', error)
+      toast.error('Não foi possível salvar a tarefa')
     }
   }
 
