@@ -39,4 +39,9 @@ export const Level = styled.div`
     width: 40px;
     height: 40px;
   }
+
+  .levelName{
+    color:#008000;
+    font-weight: bold;
+  }
 `

@@ -50,8 +50,9 @@ export default function Dashboard() {
       <h1>{totalScore} pontos</h1>
       {sentTasks.length > 0 ? (
         <C.Level>
-          <h2>Sua patente é : {rank}</h2>
+          <h2>Sua patente é : </h2>
           <img src={image} alt="Patente" />
+          <h2 className="levelName">{rank}</h2>
         </C.Level>
       ) : (
         <span>Nenhuma tarefa concluida ainda</span>

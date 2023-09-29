@@ -18,11 +18,27 @@ export function TaskProvider({ children }: ContextProps) {
 
   const [sentTasks, setSentTasks] = useState<string[]>([])
 
-  const [currentDate, setCurrentDate] = useState<string>('')
+  const [currentDate, setCurrentDate] = useState<string>(getCurrentDate())
 
   useEffect(() => {
     savedTasks
   }, [tasks])
+
+  useEffect(() => {
+    const storedCompletedTasks = localStorage.getItem('completedTasks')
+    const parsedCompletedTasks = storedCompletedTasks
+      ? JSON.parse(storedCompletedTasks)
+      : []
+
+    if (getCurrentDate() !== currentDate) {
+      // Limpar o localStorage "completedTasks" se a data for diferente
+      localStorage.removeItem('completedTasks')
+      setCurrentDate(getCurrentDate())
+    } else {
+      // Se a data for a mesma, definir as tarefas completas armazenadas
+      setSentTasks(parsedCompletedTasks)
+    }
+  }, [])
 
   useEffect(() => {
     setCurrentDate(getCurrentDate())
